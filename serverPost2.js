@@ -9,12 +9,15 @@ const server = http.createServer((req, res) => {
 
     // console.log(req.url)
     if (req.url == '/') {
-        // Getting the session cookie
+
+        // Getting the session cookie.
         let cookie = req.headers.cookie;
         if (cookie != undefined) {
-            cookie = cookie.substring(4);
+            cookie = cookie.substring(4); // Removes the part of the name of the variable from the string.
 
         }
+
+        // Getting the session after the cookie has been read.
         (async () => {
 
             // await getUserCards("1");
@@ -40,6 +43,9 @@ const server = http.createServer((req, res) => {
             }
             res.end();
         })()
+
+
+        // Obtención de JS y CSS ------------------------------------
 
     } else if (req.url == '/style.css?v=1.3') {
         fs.readFile('./res/style.css', 'utf-8')
@@ -83,5 +89,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(3000, "localhost", () => {
-    console.log(`Servidor escuchando en puerto: ${server.address().port}`);
+    console.log(`Servidor escuchando en puerto: http://localhost:${server.address().port}`);
 });

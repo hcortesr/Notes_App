@@ -1,0 +1,49 @@
+* {
+    box-sizing: border-box;
+    border: 1px solid black;
+}
+
+html {
+    font-size: 16px;
+    font-family: sans-serif;
+}
+
+body {
+    background-color: gray;
+}
+
+h1 {
+    text-align: center;
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+#login_container {
+    width: 90%;
+    max-width: 300px;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#login_container>input {
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#btn_container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: red;
+}
+
+#btn_container input {
+    width: 100%;
+}

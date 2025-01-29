@@ -1,0 +1,3 @@
+- Detección de contraseña y usuario.
+	-Crear interfaz.
+	-Implementar lógica.
