@@ -7,6 +7,7 @@ const { pool, getPassUser, getUserCards, createSession, getSession } = require("
 
 const server = http.createServer((req, res) => {
 
+    console.log(req.url);
     // console.log(req.url)
     if (req.url == '/') {
 
@@ -83,6 +84,24 @@ const server = http.createServer((req, res) => {
                 // console.log("Lyeyendo js1")
                 res.end(txt);
             })
+    } else if (req.url == '/signIn') {
+        fs.readFile('./res/signIn.html')
+        .then(txt => {
+            res.writeHead(200, {
+                'Content-type': 'text/html',
+            })
+            
+            res.end(txt);
+        })
+    } else if (req.url == '/styleSignIn.css') {
+        console.log("Entro al if");
+        fs.readFile('./res/styleSignIn.css')
+        .then(txt => {
+            res.writeHead(200, {
+                'Content-type': 'text/css',
+            });
+            res.end(txt);
+        });
     }
 
 
