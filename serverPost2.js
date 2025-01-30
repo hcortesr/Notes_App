@@ -14,17 +14,17 @@ const server = http.createServer((req, res) => {
         // Getting the session cookie.
         let cookie = req.headers.cookie;
         if (cookie != undefined) {
-            cookie = cookie.substring(4); // Removes the part of the name of the variable from the string.
-
+            cookie = cookie.substring(11); // Removes the part of the name of the variable from the string.
+            console.log("La cookie", cookie);
         }
 
         // Getting the session after the cookie has been read.
         (async () => {
 
             // await getUserCards("1");
-            const isSession = await getSession("7");
+            const isSession = await getSession(cookie);
             if (isSession) {
-                const cards = await getUserCards("7");
+                const cards = await getUserCards(cookie);
                 // console.log(cards);
 
                 let file = await fs.readFile('./res/index.html', 'utf-8');
@@ -115,11 +115,11 @@ const server = http.createServer((req, res) => {
     
             if (userPass == query.password) {
             const id_session = await createSession(query.username);
-            res.writeHead(200, {
+            res.writeHead(302, {
                 'Set-Cookie': `id_session=${id_session}; HttpOnly; Max-Age=3600`,
-                'Content-type': 'text/html',
+                'Location': '/',
             });
-            res.end("Sesión creada");
+            res.end();
             } else {
             console.log(false);
             res.end("Error de inicio de sesión");
