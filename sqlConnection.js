@@ -31,6 +31,10 @@ const createSession = async (id_user) => {
   try {
     const queryT = "INSERT INTO sessions (id_user) VALUES (?)";
     await pool.query(queryT, [id_user]);
+    const query2 = "SELECT id_session FROM sessions WHERE id_user=?"
+    const id_session = await pool.query(query2, id_user);
+    return id_session[0][0]['id_session'];
+
   } catch (error) {
     console.log("Hubo un error con la creación de la sesión:", error);
   }

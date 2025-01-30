@@ -114,7 +114,11 @@ const server = http.createServer((req, res) => {
             const userPass = await getPassUser(query.username);
     
             if (userPass == query.password) {
-            createSession(query.username);
+            const id_session = await createSession(query.username);
+            res.writeHead(200, {
+                'Set-Cookie': `id_session=${id_session}; HttpOnly; Max-Age=3600`,
+                'Content-type': 'text/html',
+            });
             res.end("Sesión creada");
             } else {
             console.log(false);
