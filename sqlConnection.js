@@ -11,7 +11,7 @@ const getPassUser = async (id_user) => {
   try {
     const queryT = `SELECT * FROM users_info WHERE id_user=?`;
     const data = await pool.query(queryT, [id_user]);
-    
+
     return data[0][0]["password"];
   } catch (error) {
     console.log("Hubo un error:", error);

@@ -75,3 +75,12 @@ h1 {
 .login_margin {
     width: 90%;
 }
+
+#warning-text {
+    width: 90%;
+    background-color: gray;
+    border-radius: 5px;
+    padding: 10px 5px;
+    margin: 0;
+    font-weight: bold;
+}

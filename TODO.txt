@@ -1,3 +1,4 @@
-- Detección de contraseña y usuario.
-	-Crear interfaz.
-	-Implementar lógica.
+/Autoredirección y detección de inicio o no de
+sesión-
+
+- Creación o inicio de sesión.

@@ -40,7 +40,9 @@ const server = http.createServer((req, res) => {
 
 
             } else {
-                console.log("no hubo sesión");
+                res.writeHead(302, {
+                    'Location': '/signIn'
+                })
             }
             res.end();
         })()
@@ -84,47 +86,73 @@ const server = http.createServer((req, res) => {
                 // console.log("Lyeyendo js1")
                 res.end(txt);
             })
-    } else if (req.url == '/signIn') {
+    } else if (req.url.startsWith('/signIn')) {
         fs.readFile('./res/signIn.html')
-        .then(txt => {
-            res.writeHead(200, {
-                'Content-type': 'text/html',
+            .then(txt => {
+                res.writeHead(200, {
+                    'Content-type': 'text/html',
+                })
+
+                res.end(txt);
             })
-            
-            res.end(txt);
-        })
     } else if (req.url == '/styleSignIn.css') {
         console.log("Entro al if");
         fs.readFile('./res/styleSignIn.css')
-        .then(txt => {
-            res.writeHead(200, {
-                'Content-type': 'text/css',
+            .then(txt => {
+                res.writeHead(200, {
+                    'Content-type': 'text/css',
+                });
+                res.end(txt);
             });
-            res.end(txt);
-        });
     } else if (req.url == '/handleLogIn' && req.method == 'POST') {
-        
+
         let info = "";
         req.on("data", (chunck) => {
-        info += chunck;
+            info += chunck;
         });
 
         req.on("end", async () => {
             const query = querystring.parse(info);
+            const action = query.action_type;
             const userPass = await getPassUser(query.username);
-    
-            if (userPass == query.password) {
-            const id_session = await createSession(query.username);
-            res.writeHead(302, {
-                'Set-Cookie': `id_session=${id_session}; HttpOnly; Max-Age=3600`,
-                'Location': '/',
-            });
-            res.end();
-            } else {
-            console.log(false);
-            res.end("Error de inicio de sesión");
+
+            // If userPass is 'undefined', that means the user hasn't been created
+            if (action == 'Sign In') {
+                if (userPass != undefined) {
+                    if (userPass == query.password) {
+                        const id_session = await createSession(query.username);
+                        res.writeHead(302, {
+                            'Set-Cookie': `id_session=${id_session}; HttpOnly; Max-Age=3600`,
+                            'Location': '/',
+                        });
+                        res.end();
+                    } else {
+                        console.log(false);
+                        res.writeHead(302, {
+                            'Location': '/signIn?screen=userDsntExist',
+                        });
+                        res.end();
+                    }
+
+                }
+
             }
+
+            console.log("La contraseña es", userPass);
+
+
         });
+    } else if (req.url == '/scriptSignIn.js') {
+
+        fs.readFile('./res/scriptSignIn.js', 'utf-8')
+            .then(txt => {
+                res.writeHead(200, {
+                    'Content-type': 'application/javascript',
+                });
+                res.end(txt);
+
+            })
+
     }
 
 
