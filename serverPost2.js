@@ -102,6 +102,25 @@ const server = http.createServer((req, res) => {
             });
             res.end(txt);
         });
+    } else if (req.url == '/handleLogIn' && req.method == 'POST') {
+        
+        let info = "";
+        req.on("data", (chunck) => {
+        info += chunck;
+        });
+
+        req.on("end", async () => {
+            const query = querystring.parse(info);
+            const userPass = await getPassUser(query.username);
+    
+            if (userPass == query.password) {
+            createSession(query.username);
+            res.end("Sesión creada");
+            } else {
+            console.log(false);
+            res.end("Error de inicio de sesión");
+            }
+        });
     }
 
 
