@@ -18,6 +18,15 @@ const getPassUser = async (id_user) => {
   }
 };
 
+const createUser = async (username, password) => {
+  try {
+    const queryT = "INSERT INTO users_info (id_user, PASSWORD) VALUES (?, ?)";
+    await pool.query(queryT, [username, password]);
+  } catch (error) {
+    console.log("Hubo un error creando el usuario", error);
+  }
+}
+
 const getUserCards = async (id_session) => {
   try {
     const queryT = `SELECT * FROM cards WHERE id_user = (SELECT id_user FROM sessions WHERE id_session=?)`;
@@ -60,4 +69,5 @@ module.exports = {
   getUserCards,
   createSession,
   getSession,
+  createUser
 };
